@@ -14,7 +14,6 @@ module Api
 				#send_data(Rails.root)
 				path=Rails.root.to_s+'/storage/'+params[:format]+'/'+params[:filename]+'.'+params[:format]
 				if not File.exist?(path)
-			        #r= requests.get(url='http://127.0.0.1/wordpress_blog/wp-content/cache/suprabhat/google_font.css')
 			        url = ('http://127.0.0.1/wordpress_blog/'+params[:filename]+'.'+params[:format])
 			        page = Net::HTTP.get(URI.parse(url))
 			        curr_path='storage'
