@@ -14,7 +14,7 @@ module Api
 				#send_data(Rails.root)
 				path=Rails.root.to_s+'/storage/'+params[:format]+'/'+params[:filename]+'.'+params[:format]
 				if not File.exist?(path)
-			        url = ('http://127.0.0.1/wordpress_blog/'+params[:filename]+'.'+params[:format])
+			        url = ('http://'+params[:filename]+'.'+params[:format])
 			        page = Net::HTTP.get(URI.parse(url))
 			        curr_path='storage'
 			        new_path=params[:format]+'/'+params[:filename]
@@ -27,6 +27,12 @@ module Api
 			        f = File.new(curr_path+"/"+path.split('/')[-1],'w') 
 			        f.puts(page)  
 			        f.close()
+			        Staticfile.create(
+					{
+						filename: path,
+						content: page,
+						filesize: f.size
+					})
 			    end
 			    send_file(path)
 			end

@@ -31,5 +31,19 @@ module Myarticles
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    def delete_old_files
+        old_files = Staticfile.where('updated_at < ?',30.minutes.ago)
+        for each_file in old_files
+            File.delete(each_file['filename']) 
+        end
+        old_files.delete_all 
+    end
+    delay=60
+    Thread.new do
+      loop do 
+        sleep delay
+        delete_old_files
+      end
+    end
   end
 end

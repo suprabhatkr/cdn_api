@@ -1,0 +1,2 @@
+class Staticfile < ApplicationRecord
+end
